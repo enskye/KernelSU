@@ -38,6 +38,10 @@ jobs:
       - name: release
         uses: softprops/action-gh-release@v3
         with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && 'nightly' || github.ref_name }}
+          name: ${{ github.event_name == 'workflow_dispatch' && 'Nightly build' || github.ref_name }}
+          prerelease: ${{ github.event_name == 'workflow_dispatch' }}
+          target_commitish: ${{ github.sha }}
           files: |
             manager/*.apk
             android*-lkm/*_kernelsu.ko
