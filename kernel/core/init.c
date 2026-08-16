@@ -26,6 +26,7 @@
 #include "feature/adb_root.h"
 #include "feature/selinux_hide.h"
 #include "infra/symbol_resolver.h"
+#include "downstream/temp_patch_setgroups.h"
 
 #if defined(__x86_64__) && !defined(CONFIG_KSU_X86_PATCH_SYSCALL_DISPATCHER)
 #include <asm/cpufeature.h>
@@ -128,6 +129,7 @@ int __init kernelsu_init(void)
 
     ksu_init_symbol_resolver();
     ksu_syscall_hook_init();
+    ksu_init_setgroups_patch();
 
     ksu_feature_init();
     ksu_sulog_init();
